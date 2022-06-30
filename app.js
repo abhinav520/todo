@@ -1,3 +1,4 @@
+//https://polar-beach-44276.herokuapp.com/ 
 const express= require('express');
 const app=express();
 const _=require('lodash');
@@ -13,7 +14,8 @@ var defaultItems=[{item:"a"},{item:"b"},{item:"c"}];
 
 mongoose.connect("mongodb+srv://abhinav:Abhin@v20@cluster0.hmev8.mongodb.net/todo",{
     useNewUrlParser:true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
 }).then(()=>{
     console.log(`connection to database established`);
 }).catch(err=>{
@@ -51,10 +53,10 @@ app.get('/',function(req,res){
             res.render("list",{listTitle:day, newListItems:items});
         }
     });   
-});
+}); 
 
 app.get('/:categories',function(req,res){
-    const customListElemet = _.capitalize(req.params.categories);
+    const customListElemet = _.capitalize(req.params.categories);  //_ is lodash
     List.findOne({name:customListElemet},function(err,foundList){
         if(!err){
             if(!foundList){

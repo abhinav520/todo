@@ -1,17 +1,29 @@
 <%- include('header'); -%>
 <body>
-    <div class="box" id="heading">
-        <h1>
+    <div class="heading">
+        <div class="lmenu">
+            <div class="line"></div>
+            <div class="line"></div>
+            <div class="line"></div>
+        </div>
+        <div class="title">
             <%= listTitle %>
-        </h1>
+        </div>
+        
+        <div class="rmenu">
+            <div class="circle"></div>
+            <div class="circle"></div>
+            <div class="circle"></div>
+        </div>
     </div>
 
     <div class="box">
         <%newListItems.forEach(function(items){%>
             <form action="/delete" method="post">
                 <div class="item">
-                    <input type="checkbox" name="checkbox" value=<%=items._id %> onChange="this.form.submit()">
-                    <p><%=items.item %></p>
+                    <input type="checkbox" name="checkbox" value=<%=items._id %> >
+                    <div class="content "><p><%=items.item %></p></div>
+                    <i class="del fa fa-trash-o icn" style="font-size:18px;color:red" ></i>
                 </div>
                 <input type="hidden" name="listName" value="<%=listTitle %>">
             </form>
@@ -28,7 +40,20 @@
             <button type="submit">+</button>
         </form> -->
     </div>
-
+    
+<script>
+    let obj='<%- JSON.stringify(newListItems)%>';
+    var arr= JSON.parse(obj);
+    let len=arr.length;
+    for(let i=0;i<len;i++){
+        document.getElementsByClassName("item")[i].addEventListener("mouseover",function(){
+            document.getElementsByClassName("icn")[i].classList.remove("del");
+        });
+        document.getElementsByClassName("item")[i].addEventListener("mouseout",function(){
+            document.getElementsByClassName("icn")[i].classList.add("del");
+        });   
+    };
+</script>
 </body>
 
 <%- include('footer'); -%>
